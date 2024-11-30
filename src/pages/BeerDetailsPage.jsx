@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import beersJSON from "./../assets/beers.json";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+
+const API_URL = "https://ih-beers-api2.herokuapp.com/beers/"
+
 
 
 function BeerDetailsPage() {
@@ -9,7 +15,15 @@ function BeerDetailsPage() {
 
   // React Router hook for navigation. We use it for the back button. You can leave this as it is.
   const navigate = useNavigate();
+  const {beerId} = useParams();
 
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/${beerId}`)
+      .then((response) => setBeer(response.data))
+      .catch((error) => console.error(error));
+  }, []);
 
 
   // TASKS:
@@ -18,6 +32,7 @@ function BeerDetailsPage() {
   // 3. Use axios to make a HTTP request.
   // 4. Use the response data from the Beers API to update the state variable.
 
+ 
 
 
   // Structure and the content of the page showing the beer details. You can leave this as it is:
